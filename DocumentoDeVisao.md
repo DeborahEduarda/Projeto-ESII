@@ -6,9 +6,9 @@ Data        | Versão  | Descrição                | Autor
 26/03/2022  | 1.0     | Protótipo Segunda Versão | Cíntia Ramos de Abreu
 28/03/2022  | 1.0     | Implementação do Projeto | Deborah Sousa
 29/03/2022  | 1.0     | Implementação no Trello  | Isabela Souza
+01/04/2022 | 1,0 | Revis do Projeto  |  Prof. Leandro Luque
 
-
-1.	Introdução	
+# INTRODUÇ 	
 1.1	Referências	
 2.	Posicionamento	
 2.1	Descrição do Negócio	
