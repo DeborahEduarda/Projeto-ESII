@@ -8,7 +8,7 @@ Data        | Versão  | Descrição                | Autor
 29/03/2022  | 1.0     | Implementação no Trello  | Isabela Souza
 01/04/2022 | 1,0 | Revis do Projeto  |  Prof. Leandro Luque
 
-# INTRODUÇ 	
+# INTRODUÇÃO	
 1.1	Referências	
 2.	Posicionamento	
 2.1	Descrição do Negócio	
