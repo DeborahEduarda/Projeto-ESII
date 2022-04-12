@@ -1,5 +1,5 @@
-## Cíntia Ramos estudante de Análise e Desenvolvimento de Sistemas 🎾
-## FatecMogiDasCruzes 😍
+## Cíntia Ramos Estudante de Análise e Desenvolvimento de Sistemas 🎾
+## Fatec Mogi Das Cruzes 😍
 
 <div align="center">
 Fala pessoal, aqui está nosso primeiro projeto solicitado pelo professor Leandro Luque da disciplina Engenharia de Software II, da Faculdade de Tecnologia de Mogi das Cruzes, a nota desse trabalho irá compor nossa média final. É um projeto de desenvolvimento de software para um clube que aluga quadras de tênis e beach tennis, que atualmente usa de forma manual as reservas das quadras, anotam em cadernos os pagamentos, dessa forma causa uma desorganização nas informações, trazendo insegurança tanto para os usuários, quanto para o administrador e zelador do clube, pelas incertezas das informações obtidas nessas folhas. Com isso, este projeto tem como objetivo final entregar para nosso cliente um sistema capaz de coletar todas essas informações de forma informatizada, trazendo maior confiabilidade, segurança, credibilidade.
