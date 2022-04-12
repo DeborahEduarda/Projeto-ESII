@@ -1,4 +1,4 @@
-## Cíntia Ramos Estudante de Análise e Desenvolvimento de Sistemas 🎾
+## Cíntia Ramos - Estudante de Análise e Desenvolvimento de Sistemas 🎾
 ## Fatec Mogi Das Cruzes 😍
 
 <div align="center">
