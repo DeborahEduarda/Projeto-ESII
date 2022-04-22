@@ -1,0 +1,35 @@
+package br.com.tenisclube.telas;
+
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author debor
+ */
+public class TelaPrincipal extends javax.swing.JFrame {
+
+    /**
+     * Creates new form TelaPrincipal
+     */
+    public TelaPrincipal() {
+        initComponents();
+    }
+
+
+    private void MenOpcSaiActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // Abaixo vai exibir uma caixa de dialogo com opcao Sim e Não.
+        int sair = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja sair?","Atenção", JOptionPane.YES_NO_OPTION);
+        if (sair == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }                                         
+    
+
+    private void MenAjuSobActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // Chamando a tela sobre
+        TelaSobre sobre = new TelaSobre();
+        sobre.setVisible(true);
+    }                                         
+
+    
+    
