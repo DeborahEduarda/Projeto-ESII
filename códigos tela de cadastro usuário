@@ -1,0 +1,66 @@
+import java.sql.*;
+import br.com.tenisclube.dal.ModuloConexao;
+import javax.swing.JOptionPane;
+
+public class TelaUsuario extends javax.swing.JInternalFrame {
+ // usando a variavel conexao do DAL
+    Connection conexao = null;
+    // criando variaveis especiais para conexão com o banco
+    //Prepared Statemente e ResultSet são frameworks do pacote java.sql
+    // e servem para preparar e executar as instruções SQL
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    /**
+     * Creates new form TelaUsuario
+     */
+    public TelaUsuario() {
+        initComponents();
+        conexao = ModuloConexao.conector();
+    }
+    private void consultar(){
+        String sql = "select * from tbusuarios where iduser=?";
+        try{
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1,txtUsuId.getText());
+            rs = pst.executeQuery();
+            if (rs.next()) {
+               txtUsuNome.setText(rs.getString(2)); 
+               txtUsuCel.setText(rs.getString(3));
+               txtUsuLogin.setText(rs.getString(4));
+               txtUsuSenha.setText(rs.getString(5));
+               txtUsuCpf.setText(rs.getString(7));
+               txtUsuEnd.setText(rs.getString(8));
+               txtUsuBai.setText(rs.getString(9));
+               txtUsuEmail.setText(rs.getString(10));
+               txtUsuCid.setText(rs.getString(11));
+               txtUsuRg.setText(rs.getString(12));
+               txtUsuEst.setText(rs.getString(13));
+               txtUsuCep.setText(rs.getString(14));
+              
+               //a linha abaixo se refere ao combobox
+               cboUsuPerfil.setSelectedItem(rs.getString(6));
+               
+            } else {
+                JOptionPane.showMessageDialog(null,"Usuario não cadastrado");
+                //as linhas abaixo "limpa" os campos
+                txtUsuNome.setText(null); 
+                txtUsuCel.setText(null);
+                txtUsuCpf.setText(null);
+                txtUsuLogin.setText(null);
+                txtUsuSenha.setText(null);
+                txtUsuCpf.setText(null);
+                txtUsuEnd.setText(null);
+                txtUsuBai.setText(null);
+                txtUsuEmail.setText(null);
+                txtUsuCid.setText(null);
+                txtUsuRg.setText(null);
+                txtUsuEst.setText(null);
+                txtUsuCep.setText(null);
+                //a linha abaixose refere ao combobox
+                cboUsuPerfil.setSelectedItem(null);
+
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }
