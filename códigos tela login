@@ -17,109 +17,102 @@ public class TelaLogin extends javax.swing.JFrame {
         String sql = "select * from tbusuarios where login = ? and senha = ?";
             
         try{
-         // as linhas abaixo preparam as consultas ao banco em funcao
-         // do que foi digitado nas caixas de texto. Os ? é substituido pelo
-         //conteudo das variaveis
-           pst = conexao.prepareStatement(sql);
-           pst.setString(1,txtUsuario.getText());
-           String captura = new String(txtSenha.getPassword());
-           pst.setString(2,captura);
-           // a linha abaixo executa a Query
-           rs = pst.executeQuery();
+            // as linhas abaixo preparam as consultas ao banco em funcao
+            // do que foi digitado nas caixas de texto. Os ? é substituido pelo
+            //conteudo das variaveis
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1,txtUsuario.getText());
+            String captura = new String(txtSenha.getPassword());
+            pst.setString(2,captura);
+            // a linha abaixo executa a Query
+            rs = pst.executeQuery();
          	// se existir usuario e senha correspondente
-   	 	//abaixo vai abrir a tela principal se a senha estiver certa
+   	 	    //abaixo vai abrir a tela principal se a senha estiver certa
                 if (rs.next()){
-                    //a linha abaixo obtem o conteudo do campo perfil da tabela tbusuario
+                   //a linha abaixo obtem o conteudo do campo perfil da tabela tbusuario
                    String perfil=rs.getString(6);
-                     //System.out.println(perfil);
-                     //a estrutura abaixo faz o tratamento do perfil do usuario
-                   switch (perfil) {
-                   case "HU 13 a 15 - Relatorios":
+                   //System.out.println(perfil);
+                   //a estrutura abaixo faz o tratamento do perfil do usuario
+                   if (perfil.equals ("HU 13 a 15 - Relatorios"))
                        {
-                           //abaixo vai abrir a tela principal se o usuario e senha estiver certa
-                           TelaPrincipal principal = new TelaPrincipal();
-                           principal.setVisible(true);
-                           TelaPrincipal.MenRel.setEnabled(true);
-                           TelaPrincipal.menCadUsu.setEnabled(true);
-                           TelaPrincipal.menCadQua.setEnabled(true);
-                           TelaPrincipal.menCadManut.setEnabled(true);
-                           //abaixo imprime na tela quem é o usuario que esta acessando
-                           TelaPrincipal.lblUsuario.setText(rs.getString(2));
-                           TelaPrincipal.jlblPerfil.setText(rs.getString(6));
-                           // abaixo mudar a cor da letra quando for adm
-                           TelaPrincipal.lblUsuario.setForeground(Color.RED);
-                           this.dispose();
-                           conexao.close();
-                           break;
+                        //abaixo vai abrir a tela principal se o usuario e senha estiver certa
+                        TelaPrincipal principal = new TelaPrincipal();
+                        principal.setVisible(true);
+                        //Linha abaixo permissões de acesso
+                        TelaPrincipal.MenRel.setEnabled(true);
+                        TelaPrincipal.menCadUsu.setEnabled(true);
+                        TelaPrincipal.menCadQua.setEnabled(true);
+                        TelaPrincipal.menCadManut.setEnabled(true);
+                        //abaixo imprime na tela quem é o usuario que esta acessando
+                        TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                        TelaPrincipal.jlblPerfil.setText(rs.getString(6));
+                        // abaixo mudar a cor da letra quando for adm
+                        TelaPrincipal.lblUsuario.setForeground(Color.RED);
+                        this.dispose();
+                        conexao.close();                           
                        }
-               /*TelaPrincipal principal = new TelaPrincipal();
-               principal.setVisible(true);
-               TelaPrincipal.lblUsuario.setText(rs.getString(2));
-               this.dispose();
-               conexao.close();
-               }*/
-               //  JOptionPane.showMessageDialog(null,"oi");
-                   case "HU 1 a 6 - gerir de quadras":
-                       {
-                           //abaixo vai abrir a tela principal se o usuario e senha estiver certa
-                           TelaPrincipal principal = new TelaPrincipal();
-                           principal.setVisible(true);
-                           TelaPrincipal.menCadQua.setEnabled(true);
-                           TelaPrincipal.menCadManut.setEnabled(true);
-                           //abaixo imprime na tela quem é o usuario que esta acessando
-                           TelaPrincipal.lblUsuario.setText(rs.getString(2));
-                           TelaPrincipal.jlblPerfil.setText(rs.getString(6));
-                           // abaixo mudar a cor da letra quando for adm
-                           TelaPrincipal.lblUsuario.setForeground(Color.BLUE);
-                           this.dispose();
-                           conexao.close();
-                           break;
-                       }
-                   case "HU 7 a 12 - gerir de usuarios":
-                       {
-                           //abaixo vai abrir a tela principal se o usuario e senha estiver certa
-                           TelaPrincipal principal = new TelaPrincipal();
-                           principal.setVisible(true);
-                           TelaPrincipal.menCadUsu.setEnabled(true);
-                           //abaixo imprime na tela quem é o usuario que esta acessando
-                           TelaPrincipal.lblUsuario.setText(rs.getString(2));
-                           TelaPrincipal.jlblPerfil.setText(rs.getString(6));
-                           // abaixo mudar a cor da letra quando for adm
-                           TelaPrincipal.lblUsuario.setForeground(Color.GREEN);
-                           this.dispose();
-                           conexao.close();
-                           break;
-                       }
-                   case "HU 17 a 27 - Zelador":
-                       {
-                           //abaixo vai abrir a tela principal se o usuario e senha estiver certa
-                           TelaPrincipal principal = new TelaPrincipal();
-                           principal.setVisible(true);
-                           TelaPrincipal.menCadQua.setEnabled(true);
-                           TelaPrincipal.menCadManut.setEnabled(true);
-                           TelaPrincipal.menCadUsu.setEnabled(true);
-                           //abaixo imprime na tela quem é o usuario que esta acessando
-                           TelaPrincipal.lblUsuario.setText(rs.getString(2));
-                           TelaPrincipal.jlblPerfil.setText(rs.getString(6));
-                           // abaixo mudar a cor da letra quando for adm
-                           TelaPrincipal.lblUsuario.setForeground(Color.YELLOW);
-                           this.dispose();
-                           conexao.close();
-                           break;
-                       }
-                   default:
-                       break;
-               }
+          
+                       else if (perfil.equals ("HU 1 a 6 - gerir de quadras"))
+                           {
+                            //abaixo vai abrir a tela principal se o usuario e senha estiver certa
+                            TelaPrincipal principal = new TelaPrincipal();
+                            principal.setVisible(true);
+                            //Linha abaixo permissões de acesso                          
+                            TelaPrincipal.menCadQua.setEnabled(true);
+                            TelaPrincipal.menCadManut.setEnabled(true);
+                            //abaixo imprime na tela quem é o usuario que esta acessando
+                            TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                            TelaPrincipal.jlblPerfil.setText(rs.getString(6));
+                            // abaixo mudar a cor da letra quando for adm
+                            TelaPrincipal.lblUsuario.setForeground(Color.BLUE);
+                            this.dispose();
+                            conexao.close();       
+                            }
+                            
+                           else if (perfil.equals ( "HU 7 a 12 - gerir de usuarios"))
+                               {
+                               //abaixo vai abrir a tela principal se o usuario e senha estiver certa
+                               TelaPrincipal principal = new TelaPrincipal();
+                               principal.setVisible(true);
+                               //Linha abaixo permissões de acesso
+                               TelaPrincipal.menCadUsu.setEnabled(true);
+                               //abaixo imprime na tela quem é o usuario que esta acessando
+                               TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                               TelaPrincipal.jlblPerfil.setText(rs.getString(6));
+                               // abaixo mudar a cor da letra quando for adm
+                               TelaPrincipal.lblUsuario.setForeground(Color.GREEN);
+                               this.dispose();
+                               conexao.close();
+                               }
+                               else 
+                                   {
+                                    //abaixo vai abrir a tela principal se o usuario e senha estiver certa
+                                    TelaPrincipal principal = new TelaPrincipal();
+                                    principal.setVisible(true);
+                                    //Linha abaixo permissões de acesso
+                                    TelaPrincipal.menCadQua.setEnabled(true);
+                                    TelaPrincipal.menCadManut.setEnabled(true);
+                                    TelaPrincipal.menCadUsu.setEnabled(true);
+                                    //abaixo imprime na tela quem é o usuario que esta acessando
+                                    TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                                    TelaPrincipal.jlblPerfil.setText(rs.getString(6));
+                                    // abaixo mudar a cor da letra quando for adm
+                                    TelaPrincipal.lblUsuario.setForeground(Color.YELLOW);
+                                    this.dispose();
+                                    conexao.close();
+                                   }
+
+               
                    
-               }else {
-                    
-                    JOptionPane.showMessageDialog(null,"usuario e/ou senha invalido(s)");
-                }
-                  
-                
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null,e);
-        }
+                   }else {
+
+                        JOptionPane.showMessageDialog(null,"usuario e/ou senha invalido(s)");
+                    }
+
+
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(null,e);
+            }
           
         
     /**
@@ -139,64 +132,7 @@ public class TelaLogin extends javax.swing.JFrame {
         }
         }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-   @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void initComponents() {
-
-        LblUsuario.setText("Usuario *");
-
-        LblSenha.setText("Senha *");
-
-        btnLogin.setText("Entrar");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
-
-        lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tenisclube/icones/dbno.png"))); // NOI18N
-        lblStatus.setMaximumSize(new java.awt.Dimension(28, 28));
-        lblStatus.setMinimumSize(new java.awt.Dimension(28, 28));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLogin))
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LblUsuario)
-                    .addComponent(LblSenha)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(51, Short.MAX_VALUE))
-        );
-       
-       
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
-
+    
                
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {                                         
@@ -205,13 +141,5 @@ public class TelaLogin extends javax.swing.JFrame {
         
     }                                        
 
-            /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaLogin().setVisible(true);
-            }
-        });
-    }
-
-              
+                        
 }
