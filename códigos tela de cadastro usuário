@@ -36,6 +36,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                txtUsuRg.setText(rs.getString(12));
                txtUsuEst.setText(rs.getString(13));
                txtUsuCep.setText(rs.getString(14));
+               txtUsuCad.setText(rs.getString(15));
               
                //a linha abaixo se refere ao combobox
                cboUsuPerfil.setSelectedItem(rs.getString(6));
@@ -56,6 +57,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                 txtUsuRg.setText(null);
                 txtUsuEst.setText(null);
                 txtUsuCep.setText(null);
+                txtUsuCad.setText(null);
                 //a linha abaixose refere ao combobox
                 cboUsuPerfil.setSelectedItem(null);
 
@@ -64,3 +66,63 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null,e);
         }
     }
+    private void adicionar(){
+        String sql = "insert into tbusuarios (iduser,usuario,fone,login,senha,perfil,cpf,endereco,bairro,email,cidade,rg,estado,cep,cadastro) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        try{            
+            pst=conexao.prepareStatement(sql);
+            pst.setString(1,txtUsuId.getText());
+            pst.setString(2,txtUsuNome.getText());
+            pst.setString(3,txtUsuCel.getText());
+            pst.setString(4,txtUsuLogin.getText());
+            pst.setString(5,txtUsuSenha.getText());
+            pst.setString(6,cboUsuPerfil.getSelectedItem().toString());
+            pst.setString(7,txtUsuCpf.getText());
+            pst.setString(8,txtUsuEnd.getText());
+            pst.setString(9,txtUsuBai.getText());
+            pst.setString(10,txtUsuEmail.getText());
+            pst.setString(11,txtUsuCid.getText());
+            pst.setString(12,txtUsuRg.getText());
+            pst.setString(13,txtUsuEst.getText());
+            pst.setString(14,txtUsuCep.getText());
+            pst.setString(15,txtUsuCad.getText());
+            //Validação dos campos obrigatorios
+            if ((txtUsuCep.getText().isEmpty())||(txtUsuId.getText().isEmpty())||(txtUsuNome.getText().isEmpty())||(txtUsuLogin.getText().isEmpty())||(txtUsuCel.getText().isEmpty())||(txtUsuSenha.getText().isEmpty())||(txtUsuCpf.getText().isEmpty())||(txtUsuEnd.getText().isEmpty())||(txtUsuBai.getText().isEmpty())||(txtUsuEmail.getText().isEmpty())||(txtUsuCid.getText().isEmpty())||(txtUsuRg.getText().isEmpty())||(txtUsuEst.getText().isEmpty()))
+                {
+                JOptionPane.showMessageDialog(null,"Preencha todos os campos obrigatorios!");
+            } else {
+                //a linha abaixo atualiza a tabela usuario com os dados do formulario 
+                int adicionado = pst.executeUpdate();
+                //a linha abaixo confirma a inserção de dados
+                if(adicionado > 0){
+                    JOptionPane.showMessageDialog(null,"Usuário adicionado com sucesso!");
+                    txtUsuNome.setText(null); 
+                    txtUsuCel.setText(null);
+                    txtUsuCpf.setText(null);
+                    txtUsuLogin.setText(null);
+                    txtUsuSenha.setText(null);
+                    txtUsuCpf.setText(null);
+                    txtUsuEnd.setText(null);
+                    txtUsuBai.setText(null);
+                    txtUsuEmail.setText(null);
+                    txtUsuCid.setText(null);
+                    txtUsuRg.setText(null);
+                    txtUsuEst.setText(null);
+                    txtUsuCep.setText(null);
+                    txtUsuCad.setText(null);
+                    //a linha abaixose refere ao combobox
+                    cboUsuPerfil.setSelectedItem(null);
+                }
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+ private void btnUsuReadActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // Chamando o metodo consultar
+        consultar();
+    }                                          
+
+    private void btnUsuCreateActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // chamando o metodo adicionar
+        adicionar();
+    }                          
