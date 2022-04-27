@@ -45,6 +45,7 @@ public class TelaLogin extends javax.swing.JFrame {
                            TelaPrincipal.menCadManut.setEnabled(true);
                            //abaixo imprime na tela quem é o usuario que esta acessando
                            TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                           TelaPrincipal.jlblPerfil.setText(rs.getString(6));
                            // abaixo mudar a cor da letra quando for adm
                            TelaPrincipal.lblUsuario.setForeground(Color.RED);
                            this.dispose();
@@ -67,6 +68,7 @@ public class TelaLogin extends javax.swing.JFrame {
                            TelaPrincipal.menCadManut.setEnabled(true);
                            //abaixo imprime na tela quem é o usuario que esta acessando
                            TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                           TelaPrincipal.jlblPerfil.setText(rs.getString(6));
                            // abaixo mudar a cor da letra quando for adm
                            TelaPrincipal.lblUsuario.setForeground(Color.BLUE);
                            this.dispose();
@@ -81,6 +83,7 @@ public class TelaLogin extends javax.swing.JFrame {
                            TelaPrincipal.menCadUsu.setEnabled(true);
                            //abaixo imprime na tela quem é o usuario que esta acessando
                            TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                           TelaPrincipal.jlblPerfil.setText(rs.getString(6));
                            // abaixo mudar a cor da letra quando for adm
                            TelaPrincipal.lblUsuario.setForeground(Color.GREEN);
                            this.dispose();
@@ -97,6 +100,7 @@ public class TelaLogin extends javax.swing.JFrame {
                            TelaPrincipal.menCadUsu.setEnabled(true);
                            //abaixo imprime na tela quem é o usuario que esta acessando
                            TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                           TelaPrincipal.jlblPerfil.setText(rs.getString(6));
                            // abaixo mudar a cor da letra quando for adm
                            TelaPrincipal.lblUsuario.setForeground(Color.YELLOW);
                            this.dispose();
@@ -112,11 +116,7 @@ public class TelaLogin extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null,"usuario e/ou senha invalido(s)");
                 }
                   
-               }else {
-                    
-                    JOptionPane.showMessageDialog(null,"usuario e/ou senha invalido(s)");
-                }
-                  
+                
         }catch (Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
