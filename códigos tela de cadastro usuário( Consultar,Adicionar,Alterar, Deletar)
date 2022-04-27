@@ -17,6 +17,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         initComponents();
         conexao = ModuloConexao.conector();
     }
+    //Criando metodo Consultar usuario ja cadastrado no banco
     private void consultar(){
         String sql = "select * from tbusuarios where iduser=?";
         try{
@@ -66,6 +67,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null,e);
         }
     }
+    //Criando o Metodo Adicionar usuario no banco
     private void adicionar(){
         String sql = "insert into tbusuarios (iduser,usuario,fone,login,senha,perfil,cpf,endereco,bairro,email,cidade,rg,estado,cep,cadastro) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try{            
@@ -117,6 +119,61 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
+    // criando o metodo para alterar dados do usuario
+    private void alterar(){
+        String sql="update tbusuarios set usuario=?,fone=?,login=?,senha=?,perfil=?,cpf=?,endereco=?,bairro=?,email=?,cidade=?,rg=?,estado=?,cep=?, cadastro=? where iduser=?";
+        try {
+            pst=conexao.prepareStatement(sql);
+            pst.setString(1,txtUsuNome.getText());
+            pst.setString(2,txtUsuCel.getText());
+            pst.setString(3,txtUsuLogin.getText());
+            pst.setString(4,txtUsuSenha.getText());
+            pst.setString(5,cboUsuPerfil.getSelectedItem().toString());
+            pst.setString(6,txtUsuCpf.getText());
+            pst.setString(7,txtUsuEnd.getText());
+            pst.setString(8,txtUsuBai.getText());
+            pst.setString(9,txtUsuEmail.getText());
+            pst.setString(10,txtUsuCid.getText());
+            pst.setString(11,txtUsuRg.getText());
+            pst.setString(12,txtUsuEst.getText());
+            pst.setString(13,txtUsuCep.getText());
+            pst.setString(14,txtUsuCad.getText());
+            pst.setString(15,txtUsuId.getText());
+            
+         //Validação dos campos obrigatorios
+            if ((txtUsuCep.getText().isEmpty())||(txtUsuId.getText().isEmpty())||(txtUsuNome.getText().isEmpty())||(txtUsuLogin.getText().isEmpty())||(txtUsuCel.getText().isEmpty())||(txtUsuSenha.getText().isEmpty())||(txtUsuCpf.getText().isEmpty())||(txtUsuEnd.getText().isEmpty())||(txtUsuBai.getText().isEmpty())||(txtUsuEmail.getText().isEmpty())||(txtUsuCid.getText().isEmpty())||(txtUsuRg.getText().isEmpty())||(txtUsuEst.getText().isEmpty()))
+                {
+                JOptionPane.showMessageDialog(null,"Preencha todos os campos obrigatorios!");
+            } else {
+            
+            //a linha abaixo atualiza a tabela usuario com os dados do formulario 
+                int adicionado = pst.executeUpdate();
+                //a linha abaixo confirma a inserção de dados
+                if(adicionado > 0){
+                    JOptionPane.showMessageDialog(null,"Dados do Usuário alterados com sucesso!");
+                    txtUsuNome.setText(null); 
+                    txtUsuCel.setText(null);
+                    txtUsuCpf.setText(null);
+                    txtUsuLogin.setText(null);
+                    txtUsuSenha.setText(null);
+                    txtUsuCpf.setText(null);
+                    txtUsuEnd.setText(null);
+                    txtUsuBai.setText(null);
+                    txtUsuEmail.setText(null);
+                    txtUsuCid.setText(null);
+                    txtUsuRg.setText(null);
+                    txtUsuEst.setText(null);
+                    txtUsuCep.setText(null);
+                    txtUsuCad.setText(null);
+                    //a linha abaixose refere ao combobox
+                    cboUsuPerfil.setSelectedItem(null);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
  private void btnUsuReadActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // Chamando o metodo consultar
         consultar();
@@ -126,3 +183,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         // chamando o metodo adicionar
         adicionar();
     }                          
+     private void btnUsuUpdateActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // chamando o metodo alterar
+        alterar();
+    }            
