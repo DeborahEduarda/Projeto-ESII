@@ -1,0 +1,158 @@
+package br.com.tenisclube.dal;
+
+import interDAO.usuarioInterDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author debor
+ */
+public class UsuarioDAO {
+
+    public void cadastrar(usuarioInterDAO u){
+        Connection conexao = ModuloConexao.getConector();
+        String sql;
+        sql = "insert into tbusuarios (iduser,usuario,fone,login,senha,perfil,cpf,endereco,bairro,email,cidade,rg,estado,cep,cadastro) "
+                + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        try{
+           PreparedStatement pst = conexao.prepareStatement(sql);
+            pst.setInt(1,u.getIdUser());
+            pst.setString(2,u.getNome());
+            pst.setString(3,u.getFone());
+            pst.setString(4,u.getUsuario());
+            pst.setString(5,u.getSenha());
+            pst.setString(6,u.getPerfil());
+            pst.setString(7,u.getCpf());
+            pst.setString(8,u.getEndereco());
+            pst.setString(9,u.getBairro());
+            pst.setString(10,u.getEmail());
+            pst.setString(11,u.getCidade());
+            pst.setString(12,u.getRg());
+            pst.setString(13,u.getEstado());
+            pst.setString(14,u.getCep());
+            pst.setString(15,u.getCadastro());
+           
+            //Validação dos campos obrigatorios
+           /* if ((txtUsuCep.getText().isEmpty())||(jtxtUsuId.getText().isEmpty())||(txtUsuNome.getText().isEmpty())||(txtUsuLogin.getText().isEmpty())||(txtUsuCel.getText().isEmpty())||(txtUsuSenha.getText().isEmpty())||(txtUsuCpf.getText().isEmpty())||(txtUsuEnd.getText().isEmpty())||(txtUsuBai.getText().isEmpty())||(txtUsuEmail.getText().isEmpty())||(txtUsuCid.getText().isEmpty())||(txtUsuRg.getText().isEmpty())||(txtUsuEst.getText().isEmpty()))
+                {
+                JOptionPane.showMessageDialog(null,"Preencha todos os campos obrigatorios!");
+            
+            
+        */  pst.executeUpdate();
+               pst.close();
+               conexao.close();
+               JOptionPane.showMessageDialog(null,"Adicionado com sucesso");
+            
+        } catch (Exception e) {
+         JOptionPane.showMessageDialog(null, e);
+        }}
+
+    public void alterar (usuarioInterDAO u){
+        Connection conexao = ModuloConexao.getConector();
+        String sql="update tbusuarios set usuario=?,fone=?,login=?,senha=?,perfil=?,cpf=?,endereco=?,bairro=?,email=?,cidade=?,rg=?,estado=?,cep=?, cadastro=? where iduser=?";
+    
+      try{
+           PreparedStatement pst = conexao.prepareStatement(sql);
+            //pst.setInt(1,u.getIdUser());
+            pst.setString(2,u.getNome());
+            pst.setString(3,u.getFone());
+            pst.setString(4,u.getUsuario());
+            pst.setString(5,u.getSenha());
+            pst.setString(6,u.getPerfil());
+            pst.setString(7,u.getCpf());
+            pst.setString(8,u.getEndereco());
+            pst.setString(9,u.getBairro());
+            pst.setString(10,u.getEmail());
+            pst.setString(11,u.getCidade());
+            pst.setString(12,u.getRg());
+            pst.setString(13,u.getEstado());
+            pst.setString(14,u.getCep());
+            pst.setString(15,u.getCadastro());
+            //Validação dos campos obrigatorios
+           /* if ((txtUsuCep.getText().isEmpty())||(jtxtUsuId.getText().isEmpty())||(txtUsuNome.getText().isEmpty())||(txtUsuLogin.getText().isEmpty())||(txtUsuCel.getText().isEmpty())||(txtUsuSenha.getText().isEmpty())||(txtUsuCpf.getText().isEmpty())||(txtUsuEnd.getText().isEmpty())||(txtUsuBai.getText().isEmpty())||(txtUsuEmail.getText().isEmpty())||(txtUsuCid.getText().isEmpty())||(txtUsuRg.getText().isEmpty())||(txtUsuEst.getText().isEmpty()))
+                {
+                JOptionPane.showMessageDialog(null,"Preencha todos os campos obrigatorios!");
+            
+            
+        */  pst.executeUpdate();
+            pst.close();
+            conexao.close();
+            JOptionPane.showMessageDialog(null,"Alterado com sucesso");
+            
+        } catch (Exception e) {
+         JOptionPane.showMessageDialog(null, e);
+        }}
+    
+    public void consultar(usuarioInterDAO u){
+        Connection conexao = ModuloConexao.getConector();
+        String sql = "select * from tbusuarios where cpf=?";
+        
+         try{
+           PreparedStatement pst = conexao.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery();
+              if (rs.next()) {
+               usuarioInterDAO u = new usuarioInterDAO();
+               
+               u.getIdUser(rs.getString(1)); 
+               u.getNome(rs.getString(2)); 
+               u.getFone(rs.getString(3));
+               u.getUsuario(rs.getString(4));
+               u.getSenha(rs.getString(5));
+               u.getCpf(rs.getString(7));
+               u.getEndereco(rs.getString(8));
+               u.getBairro(rs.getString(9));
+               u.getEmail(rs.getString(10));
+               u.getCidade(rs.getString(11));
+               u.getRg(rs.getString(12));
+               u.getEstado(rs.getString(13));
+               u.getCep(rs.getString(14));
+               u.getCadastro(rs.getString(15));
+           
+            
+              }
+        } catch (Exception e) {
+         JOptionPane.showMessageDialog(null, e);
+        }
+
+      
+    }
+        
+    public void apagar(usuarioInterDAO u){
+        Connection conexao = ModuloConexao.getConector();
+        String sql="delete from tbusuarios where iduser=?";
+        int confirma = JOptionPane.showConfirmDialog(null," Tem certeza que deseja Excluir esse usuário?" ,"Atenção", JOptionPane.YES_NO_OPTION);
+    if (confirma==JOptionPane.YES_OPTION){
+            try{
+               PreparedStatement pst = conexao.prepareStatement(sql);
+               pst.setInt(1,u.getIdUser());
+               pst.executeUpdate();
+               pst.close();
+               conexao.close();
+              // int apagado = pst.executeUpdate();
+            //if(apagado>0){
+                JOptionPane.showMessageDialog(null,"Usuário removido com sucesso");
+                /*pst.setInt(1,u.getIdUser(null));
+                pst.setString(2,u.getNome(null));
+                pst.setString(3,u.getFone(null));
+                pst.setString(4,u.getUsuario(null));
+                pst.setString(5,u.getSenha(null));
+                pst.setString(6,u.getPerfil(null));
+                pst.setString(7,u.getCpf(null));
+                pst.setString(8,u.getEndereco(null));
+                pst.setString(9,u.getBairro(null));
+                pst.setString(10,u.getEmail(null));
+                pst.setString(11,u.getCidade(null));
+                pst.setString(12,u.getRg(null));
+                pst.setString(13,u.getEstado(null));
+                pst.setString(14,u.getCep(null));
+                pst.setString(15,u.getCadastro(null));}*/
+
+            } catch (Exception e) {
+              JOptionPane.showMessageDialog(null, "erro ao excluir");
+                    }
+
+    }}}
+    
