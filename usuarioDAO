@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author debor
+ * @author cintia - debora - isabela
  */
 public class UsuarioDAO {
 
