@@ -1,5 +1,12 @@
+/*
+*@author cintia - debora - isabela
+*/
+
+
 public class QuadraDAO {
+
     public void cadastrar(quadraInterDAO q){
+    
         Connection conexao = ModuloConexao.getConector();
         String sql;
         sql = "insert into tbquadras (idquad,nomequadra,preco,bancoquad,arquibancada,quadcoberta,tipoquad) values (?,?,?,?,?,?,?)";
