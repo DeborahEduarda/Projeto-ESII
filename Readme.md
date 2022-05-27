@@ -1,7 +1,4 @@
-## Cíntia Ramos - Graduanda em Análise e Desenvolvimento de Sistemas 🎾
-## Déborah Sousa - Graduanda em Análise e Desenvolvimento de Sistemas 🎾
-## Isabela Soares - Graduanda em Análise e Desenvolvimento de Sistemas 🎾
-
+## Cíntia Ramos - Déborah Sousa -  Isabela Soares Graduandas em Análise e Desenvolvimento de Sistemas 
 ## Fatec Mogi Das Cruzes 😍
 
 <div align="center">
