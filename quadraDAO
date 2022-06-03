@@ -1,0 +1,93 @@
+/*
+*@author cintia - debora - isabela
+*/
+
+
+public class QuadraDAO {
+
+    public void cadastrar(quadraInterDAO q){
+    
+        Connection conexao = ModuloConexao.getConector();
+        String sql;
+        sql = "insert into tbquadras (idquad,nomequadra,preco,bancoquad,arquibancada,quadcoberta,tipoquad) values (?,?,?,?,?,?,?)";
+        try{
+           PreparedStatement pst = conexao.prepareStatement(sql);
+            pst.setInt(1,q.getIdquad());
+            pst.setString(2,q.getNomequadra());
+            pst.setString(3,q.getPreco());
+            pst.setString(4,q.getBancoquad());
+            pst.setString(5,q.getArquibancada());
+            pst.setString(6,q.getQuadcoberta());
+            pst.setString(7,q.getTipoquad());
+            
+         pst.executeUpdate();
+               pst.close();
+               conexao.close();
+               JOptionPane.showMessageDialog(null,"Adicionado com sucesso");
+            
+        } catch (Exception e) {
+         JOptionPane.showMessageDialog(null, e);
+        }}
+    public void alterar (quadraInterDAO q){
+        Connection conexao = ModuloConexao.getConector();
+        String sql="update tbquadras set nomequadra=?,preco=?,tipoquad=?,bancoquad=?,arquibancada=?,quadcoberta=? where idquad=?";
+      try{
+           PreparedStatement pst = conexao.prepareStatement(sql);
+            
+            pst.setString(2,q.getNomequadra());
+            pst.setString(3,q.getPreco());
+            pst.setString(4,q.getBancoquad());
+            pst.setString(5,q.getArquibancada());
+            pst.setString(6,q.getQuadcoberta());
+            pst.setString(7,q.getTipoquad());
+            pst.executeUpdate();
+            pst.close();
+            conexao.close();
+            JOptionPane.showMessageDialog(null,"Alterado com sucesso");
+            
+        } catch (Exception e) {
+         JOptionPane.showMessageDialog(null, e);
+        }}   
+    public void consultar(quadraInterDAO q){
+        Connection conexao = ModuloConexao.getConector();
+        String sql = "select * from tbquadras where idquad=?";
+        
+         try{
+           PreparedStatement pst = conexao.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery();
+              if (rs.next()) {
+               quadraInterDAO u = new quadraInterDAO();
+               q.getIdquad(rs.getString(id)); 
+               q.getNomequadra(rs.getString(2)); 
+               q.getPreco(rs.getString(3));
+               q.getBancoquad(rs.getString(4));
+               q.getArquibancada(rs.getString(5));
+               q.getQuadcoberta(rs.getString(7));
+               q.getTipoquad(rs.getString(8));
+               
+            
+              }
+        } catch (Exception e) {
+         JOptionPane.showMessageDialog(null, e);
+        }
+}
+    public void apagar(quadraInterDAO q){
+        Connection conexao = ModuloConexao.getConector();
+        String sql="delete from tbquadras where idquad=?";
+        int confirma = JOptionPane.showConfirmDialog(null," Tem certeza que deseja Excluir essa quadra?" ,"Atenção", JOptionPane.YES_NO_OPTION);
+            if (confirma==JOptionPane.YES_OPTION){
+            try{
+               PreparedStatement pst = conexao.prepareStatement(sql);
+               pst.setInt(1,q.getIdquad());
+               pst.executeUpdate();
+               pst.close();
+               conexao.close();
+              
+                JOptionPane.showMessageDialog(null,"Quadra removida com sucesso");
+                
+
+            } catch (Exception e) {
+              JOptionPane.showMessageDialog(null, "erro ao excluir");
+                    }
+            
+    }}}
