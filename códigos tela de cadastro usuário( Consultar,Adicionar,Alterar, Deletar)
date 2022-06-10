@@ -1,234 +1,171 @@
-import java.sql.*;
-import br.com.tenisclube.dal.ModuloConexao;
+package br.com.tenisclube.telas;
+
+
+import br.com.tenisclube.dal.UsuarioDAO;
+import interDAO.usuarioInterDAO;
 import javax.swing.JOptionPane;
 
+
+/**
+ *
+ * @author debor
+ */
+
 public class TelaUsuario extends javax.swing.JInternalFrame {
- // usando a variavel conexao do DAL
-    Connection conexao = null;
-    // criando variaveis especiais para conexão com o banco
-    //Prepared Statemente e ResultSet são frameworks do pacote java.sql
-    // e servem para preparar e executar as instruções SQL
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-    /**
-     * Creates new form TelaUsuario
-     */
+ 
     public TelaUsuario() {
         initComponents();
-        conexao = ModuloConexao.conector();
+                  
+        
     }
-    //Criando metodo Consultar usuario ja cadastrado no banco
-    private void consultar(){
-        String sql = "select * from tbusuarios where iduser=?";
-        try{
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1,txtUsuId.getText());
-            rs = pst.executeQuery();
-            if (rs.next()) {
-               txtUsuNome.setText(rs.getString(2)); 
-               txtUsuCel.setText(rs.getString(3));
-               txtUsuLogin.setText(rs.getString(4));
-               txtUsuSenha.setText(rs.getString(5));
-               txtUsuCpf.setText(rs.getString(7));
-               txtUsuEnd.setText(rs.getString(8));
-               txtUsuBai.setText(rs.getString(9));
-               txtUsuEmail.setText(rs.getString(10));
-               txtUsuCid.setText(rs.getString(11));
-               txtUsuRg.setText(rs.getString(12));
-               txtUsuEst.setText(rs.getString(13));
-               txtUsuCep.setText(rs.getString(14));
-               txtUsuCad.setText(rs.getString(15));
-              
-               //a linha abaixo se refere ao combobox
-               cboUsuPerfil.setSelectedItem(rs.getString(6));
-               
-            } else {
-                JOptionPane.showMessageDialog(null,"Usuario não cadastrado");
-                //as linhas abaixo "limpa" os campos
-                txtUsuNome.setText(null); 
-                txtUsuCel.setText(null);
-                txtUsuCpf.setText(null);
-                txtUsuLogin.setText(null);
-                txtUsuSenha.setText(null);
-                txtUsuCpf.setText(null);
-                txtUsuEnd.setText(null);
-                txtUsuBai.setText(null);
-                txtUsuEmail.setText(null);
-                txtUsuCid.setText(null);
-                txtUsuRg.setText(null);
-                txtUsuEst.setText(null);
-                txtUsuCep.setText(null);
-                txtUsuCad.setText(null);
-                //a linha abaixose refere ao combobox
-                cboUsuPerfil.setSelectedItem(null);
-
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null,e);
-        }
-    }
-    //Criando o Metodo Adicionar usuario no banco
-    private void adicionar(){
-        String sql = "insert into tbusuarios (iduser,usuario,fone,login,senha,perfil,cpf,endereco,bairro,email,cidade,rg,estado,cep,cadastro) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        try{            
-            pst=conexao.prepareStatement(sql);
-            pst.setString(1,txtUsuId.getText());
-            pst.setString(2,txtUsuNome.getText());
-            pst.setString(3,txtUsuCel.getText());
-            pst.setString(4,txtUsuLogin.getText());
-            pst.setString(5,txtUsuSenha.getText());
-            pst.setString(6,cboUsuPerfil.getSelectedItem().toString());
-            pst.setString(7,txtUsuCpf.getText());
-            pst.setString(8,txtUsuEnd.getText());
-            pst.setString(9,txtUsuBai.getText());
-            pst.setString(10,txtUsuEmail.getText());
-            pst.setString(11,txtUsuCid.getText());
-            pst.setString(12,txtUsuRg.getText());
-            pst.setString(13,txtUsuEst.getText());
-            pst.setString(14,txtUsuCep.getText());
-            pst.setString(15,txtUsuCad.getText());
-            //Validação dos campos obrigatorios
-            if ((txtUsuCep.getText().isEmpty())||(txtUsuId.getText().isEmpty())||(txtUsuNome.getText().isEmpty())||(txtUsuLogin.getText().isEmpty())||(txtUsuCel.getText().isEmpty())||(txtUsuSenha.getText().isEmpty())||(txtUsuCpf.getText().isEmpty())||(txtUsuEnd.getText().isEmpty())||(txtUsuBai.getText().isEmpty())||(txtUsuEmail.getText().isEmpty())||(txtUsuCid.getText().isEmpty())||(txtUsuRg.getText().isEmpty())||(txtUsuEst.getText().isEmpty()))
-                {
-                JOptionPane.showMessageDialog(null,"Preencha todos os campos obrigatorios!");
-            } else {
-                //a linha abaixo atualiza a tabela usuario com os dados do formulario 
-                int adicionado = pst.executeUpdate();
-                //a linha abaixo confirma a inserção de dados
-                if(adicionado > 0){
-                    JOptionPane.showMessageDialog(null,"Usuário adicionado com sucesso!");
-                    txtUsuNome.setText(null); 
-                    txtUsuCel.setText(null);
-                    txtUsuCpf.setText(null);
-                    txtUsuLogin.setText(null);
-                    txtUsuSenha.setText(null);
-                    txtUsuCpf.setText(null);
-                    txtUsuEnd.setText(null);
-                    txtUsuBai.setText(null);
-                    txtUsuEmail.setText(null);
-                    txtUsuCid.setText(null);
-                    txtUsuRg.setText(null);
-                    txtUsuEst.setText(null);
-                    txtUsuCep.setText(null);
-                    txtUsuCad.setText(null);
-                    //a linha abaixose refere ao combobox
-                    cboUsuPerfil.setSelectedItem(null);
-                }
-            }
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-    
-    // criando o metodo para alterar dados do usuario
-    private void alterar(){
-        String sql="update tbusuarios set usuario=?,fone=?,login=?,senha=?,perfil=?,cpf=?,endereco=?,bairro=?,email=?,cidade=?,rg=?,estado=?,cep=?, cadastro=? where iduser=?";
-        try {
-            pst=conexao.prepareStatement(sql);
-            pst.setString(1,txtUsuNome.getText());
-            pst.setString(2,txtUsuCel.getText());
-            pst.setString(3,txtUsuLogin.getText());
-            pst.setString(4,txtUsuSenha.getText());
-            pst.setString(5,cboUsuPerfil.getSelectedItem().toString());
-            pst.setString(6,txtUsuCpf.getText());
-            pst.setString(7,txtUsuEnd.getText());
-            pst.setString(8,txtUsuBai.getText());
-            pst.setString(9,txtUsuEmail.getText());
-            pst.setString(10,txtUsuCid.getText());
-            pst.setString(11,txtUsuRg.getText());
-            pst.setString(12,txtUsuEst.getText());
-            pst.setString(13,txtUsuCep.getText());
-            pst.setString(14,txtUsuCad.getText());
-            pst.setString(15,txtUsuId.getText());
-            
-         //Validação dos campos obrigatorios
-            if ((txtUsuCep.getText().isEmpty())||(txtUsuId.getText().isEmpty())||(txtUsuNome.getText().isEmpty())||(txtUsuLogin.getText().isEmpty())||(txtUsuCel.getText().isEmpty())||(txtUsuSenha.getText().isEmpty())||(txtUsuCpf.getText().isEmpty())||(txtUsuEnd.getText().isEmpty())||(txtUsuBai.getText().isEmpty())||(txtUsuEmail.getText().isEmpty())||(txtUsuCid.getText().isEmpty())||(txtUsuRg.getText().isEmpty())||(txtUsuEst.getText().isEmpty()))
-                {
-                JOptionPane.showMessageDialog(null,"Preencha todos os campos obrigatorios!");
-            } else {
-            
-            //a linha abaixo atualiza a tabela usuario com os dados do formulario 
-                int adicionado = pst.executeUpdate();
-                //a linha abaixo confirma a inserção de dados
-                if(adicionado > 0){
-                    JOptionPane.showMessageDialog(null,"Dados do Usuário alterados com sucesso!");
-                    txtUsuNome.setText(null); 
-                    txtUsuCel.setText(null);
-                    txtUsuCpf.setText(null);
-                    txtUsuLogin.setText(null);
-                    txtUsuSenha.setText(null);
-                    txtUsuCpf.setText(null);
-                    txtUsuEnd.setText(null);
-                    txtUsuBai.setText(null);
-                    txtUsuEmail.setText(null);
-                    txtUsuCid.setText(null);
-                    txtUsuRg.setText(null);
-                    txtUsuEst.setText(null);
-                    txtUsuCep.setText(null);
-                    txtUsuCad.setText(null);
-                    //a linha abaixose refere ao combobox
-                    cboUsuPerfil.setSelectedItem(null);
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-    
-    //metodo Responsavel pela remoção de usuario no banco
-    private void remover(){
-    //a estrutura abaixo confirma a remoção de usuario
-    int confirma = JOptionPane.showConfirmDialog(null," Tem certeza que deseja Excluir esse usuário?" ,"Atenção", JOptionPane.YES_NO_OPTION);
-    if (confirma==JOptionPane.YES_OPTION){
-        String sql="delete from tbusuarios where iduser=?";
-        try {
-            pst=conexao.prepareStatement(sql);
-            pst.setString(1,jtxtUsuId.getText());
-            int apagado = pst.executeUpdate();
-            if(apagado>0){
-                JOptionPane.showMessageDialog(null,"Usuário removido com sucesso");
-                txtUsuNome.setText(null); 
-                txtUsuCel.setText(null);
-                txtUsuCpf.setText(null);
-                txtUsuLogin.setText(null);
-                txtUsuSenha.setText(null);
-                txtUsuCpf.setText(null);
-                txtUsuEnd.setText(null);
-                txtUsuBai.setText(null);
-                txtUsuEmail.setText(null);
-                txtUsuCid.setText(null);
-                txtUsuRg.setText(null);
-                txtUsuEst.setText(null);
-                txtUsuCep.setText(null);
-                txtUsuCad.setText(null);
-                //a linha abaixose refere ao combobox
-                cboUsuPerfil.setSelectedItem(null);
-            }
-            
-            
-                
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,e);
-        }
-        }
-    
-    
-    
- private void btnUsuReadActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // Chamando o metodo consultar
-        consultar();
-    }                                          
-
-    private void btnUsuCreateActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // chamando o metodo adicionar
-        adicionar();
-    }                          
-     private void btnUsuUpdateActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // chamando o metodo alterar
-        alterar();
-    }           
     
     private void btnUsuDeleteActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // Chamando o metodo remover
-        remover();
-    }               
+        //remover();
+        int iduser = Integer.parseInt(txtUsuId.getText());
+        UsuarioDAO uDAO = new UsuarioDAO();
+        uDAO.apagar(iduser);
+        txtUsuId.setText("");
+        txtUsuNome.setText("");
+        txtUsuCel.setText("");
+        txtUsuLogin.setText("");
+        txtUsuSenha.setText("");
+        txtUsuCpf.setText("");
+        txtUsuEnd.setText("");
+        txtUsuBai.setText("");
+        txtUsuEmail.setText("");
+        txtUsuCid.setText("");
+        txtUsuRg.setText("");
+        txtUsuEst.setText("");
+        txtUsuCep.setText("");
+           // txtUsuCad.setText(u.getCadastro().toSring);
+        cboUsuPerfil.setSelectedItem("");
+        
+        
+    }                                            
+
+private void btnUsuReadActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // Chamando o metodo consultar
+        //consultar();
+        int iduser = Integer.parseInt(txtUsuId.getText());
+        
+        UsuarioDAO uDAO = new UsuarioDAO();
+        usuarioInterDAO u = uDAO.consultar(iduser);
+        if (u == null){
+            JOptionPane.showMessageDialog(this, "Usuario não cadastrado");
+        }else{
+            //preencher o form com os dados
+            
+            txtUsuNome.setText(u.getNome());
+            txtUsuCel.setText(u.getFone());
+            txtUsuLogin.setText(u.getUsuario());
+            txtUsuSenha.setText(u.getSenha());
+            txtUsuCpf.setText(u.getCpf());
+            txtUsuEnd.setText(u.getEndereco());
+            txtUsuBai.setText(u.getBairro());
+            txtUsuEmail.setText(u.getEmail());
+            txtUsuCid.setText(u.getCidade());
+            txtUsuRg.setText(u.getRg());
+            txtUsuEst.setText(u.getEstado());
+            txtUsuCep.setText(u.getCep());
+            cboUsuPerfil.setSelectedItem(u.getPerfil());
+            
+        }
+    }                                
+    private void btnUsuCreateActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // chamando o metodo adicionar
+        usuarioInterDAO u = new usuarioInterDAO();
+        //u.setIdUser (Integer.getInteger(txtUsuId.getText())); 
+        u.setNome(txtUsuNome.getText()); 
+        u.setFone(txtUsuCel.getText()); 
+        u.setUsuario(txtUsuLogin.getText());
+        u.setSenha(txtUsuSenha.getText());
+        u.setCpf(txtUsuCpf.getText());
+        u.setEndereco(txtUsuEnd.getText());
+        u.setBairro(txtUsuBai.getText());
+        u.setEmail(txtUsuEmail.getText());
+        u.setCidade(txtUsuCid.getText());
+        u.setRg (txtUsuRg.getText());
+        u.setEstado(txtUsuEst.getText());
+        u.setCep(txtUsuCep.getText());
+        u.setIdUser(Integer.parseInt(txtUsuId.getText()));
+        u.setPerfil(cboUsuPerfil.getSelectedItem().toString());
+        UsuarioDAO uDAO = new UsuarioDAO();
+        uDAO.cadastrar(u);
+       
+    }                                            
+
+private void btnUsuUpdateActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // chamando o metodo alterar
+       // alterar();
+       int iduser = Integer.parseInt(txtUsuId.getText());
+       usuarioInterDAO u = new usuarioInterDAO();
+        u.setIdUser(iduser);
+        u.setNome(txtUsuNome.getText()); 
+        u.setFone(txtUsuCel.getText()); 
+        u.setUsuario(txtUsuLogin.getText());
+        u.setSenha(txtUsuSenha.getText());
+        u.setCpf(txtUsuCpf.getText());
+        u.setEndereco(txtUsuEnd.getText());
+        u.setBairro(txtUsuBai.getText());
+        u.setEmail(txtUsuEmail.getText());
+        u.setCidade(txtUsuCid.getText());
+        u.setRg (txtUsuRg.getText());
+        u.setEstado(txtUsuEst.getText());
+        u.setCep(txtUsuCep.getText());
+        u.setPerfil(cboUsuPerfil.getSelectedItem().toString());
+        
+        UsuarioDAO uDAO = new UsuarioDAO();
+        uDAO.alterar(u);
+        
+        
+        txtUsuId.setText("");
+        txtUsuNome.setText("");
+        txtUsuCel.setText("");
+        txtUsuLogin.setText("");
+        txtUsuSenha.setText("");
+        txtUsuCpf.setText("");
+        txtUsuEnd.setText("");
+        txtUsuBai.setText("");
+        txtUsuEmail.setText("");
+        txtUsuCid.setText("");
+        txtUsuRg.setText("");
+        txtUsuEst.setText("");
+        txtUsuCep.setText("");
+        cboUsuPerfil.setSelectedItem("");
+   
+    }                                            
+
+    
+    }                                        
+ public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TelaUsuario().setVisible(true);
+            }
+        });
+    }
