@@ -14,7 +14,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         lblUsuario.setText(u.getNome());
         lblPerfil.setText(u.getPerfil());
+        Date dia = new Date ();
+        DateFormat mudador = DateFormat.getDateInstance(DateFormat.SHORT);
+        lblData.setText(mudador.format(dia)); 
               
+       
             
         
     }
