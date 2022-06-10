@@ -13,6 +13,7 @@ public class quadraInterDAO {
     private String arquibancada;
     private String quadcoberta;
     private String tipoquad;
+    
     public int getIdquad() {
         return idquad;
     }
@@ -52,7 +53,6 @@ public class quadraInterDAO {
     public void setArquibancada(String arquibancada) {
         this.arquibancada = arquibancada;
     }
-
     public String getQuadcoberta() {
         return quadcoberta;
     }
