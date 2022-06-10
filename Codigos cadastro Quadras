@@ -1,177 +1,120 @@
+
 package br.com.tenisclube.telas;
 
-import java.sql.*;
-import br.com.tenisclube.dal.ModuloConexao;
+import br.com.tenisclube.dal.QuadraDAO;
+import interDAO.quadraInterDAO;
 import javax.swing.JOptionPane;
+
+
 
 /**
  *
  * @author debor
  */
 public class TelaQuadra extends javax.swing.JInternalFrame {
-    // usando a variavel conexao do DAL
-    Connection conexao = null;
-    // criando variaveis especiais para conexão com o banco
-    //Prepared Statemente e ResultSet são frameworks do pacote java.sql
-    // e servem para preparar e executar as instruções SQL
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-
-    /**
-     * Creates new form TelaQuadra
-     */
+   
+     
     public TelaQuadra() {
         initComponents();
-        conexao = ModuloConexao.conector();
+       
     }
-    //Criando metodo Consultar
-    private void consultar(){
-        String sql = "select * from tbquadras where idquad=?";
-        try{
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1,txtQId.getText());
-            rs = pst.executeQuery();
-            if (rs.next()) {
-               txtQNome.setText(rs.getString(2)); 
-               txtQPreco.setText(rs.getString(3));
-               //a linha abaixo se refere ao combobox
-               cboQBanJog.setSelectedItem(rs.getString(4));
-               cboQArqb.setSelectedItem(rs.getString(5));
-               cboQCob.setSelectedItem(rs.getString(6));
-               cboQTipo.setSelectedItem(rs.getString(7));              
-            } else {
-                JOptionPane.showMessageDialog(null,"Quadra não cadastrada");
-                //as linhas abaixo "limpa" os campos
-                txtQNome.setText(null); 
-                txtQPreco.setText(null);
-                //a linha abaixo se refere ao combobox
-                cboQBanJog.setSelectedItem(null);
-                cboQArqb.setSelectedItem(null);
-                cboQCob.setSelectedItem(null);
-                cboQTipo.setSelectedItem(null);
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null,e);
-        }
-    }
-    // Criando metodo Adicionar
-     private void adicionar(){
-        String sql = "insert into tbquadras (idquad,nomequadra,preco,bancoquad,arquibancada,quadcoberta,tipoquad) values (?,?,?,?,?,?,?)";
-        try{            
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1,txtQId.getText());
-            pst.setString(2,txtQNome.getText());
-            pst.setString(3,txtQPreco.getText());
-            pst.setString(4,cboQBanJog.getSelectedItem().toString());
-            pst.setString(5,cboQArqb.getSelectedItem().toString());
-            pst.setString(6,cboQCob.getSelectedItem().toString());
-            pst.setString(7,cboQTipo.getSelectedItem().toString());
-            
-            //Validação dos campos obrigatorios
-            if ((txtQId.getText().isEmpty())||(txtQNome.getText().isEmpty())||(txtQPreco.getText().isEmpty()))
-                {
-                JOptionPane.showMessageDialog(null,"Preencha todos os campos obrigatorios!");
-            } else {
-            
-            //a linha abaixo atualiza a tabela usuario com os dados do formulario 
-                int adicionado = pst.executeUpdate();
-                //a linha abaixo confirma a inserção de dados
-                if(adicionado > 0){
-                    JOptionPane.showMessageDialog(null,"Quadra adicionada com sucesso!");
-                     //as linhas abaixo "limpa" os campos
-                txtQNome.setText(null); 
-                txtQPreco.setText(null);
-                
-                }
-                }
-            
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
- // criando o metodo para alterar dados do usuario
-    private void alterar(){
-        String sql="update tbquadras set nomequadra=?,preco=?,tipoquad=?,bancoquad=?,arquibancada=?,quadcoberta=? where idquad=?";
-        try {
-            pst = conexao.prepareStatement(sql);
-            
-            pst.setString(1,txtQNome.getText());
-            pst.setString(2,txtQPreco.getText());
-            pst.setString(3,cboQTipo.getSelectedItem().toString());
-            pst.setString(4,cboQArqb.getSelectedItem().toString());
-            pst.setString(5,cboQCob.getSelectedItem().toString());
-            pst.setString(6,cboQBanJog.getSelectedItem().toString());
-            pst.setString(7,txtQId.getText());
-               
-         //Validação dos campos obrigatorios
-            if ((txtQId.getText().isEmpty())||(txtQNome.getText().isEmpty())||(txtQPreco.getText().isEmpty()))
-                {
-                JOptionPane.showMessageDialog(null,"Preencha todos os campos obrigatorios!");
-            } else {
-            
-            //a linha abaixo atualiza a tabela usuario com os dados do formulario 
-                int adicionado = pst.executeUpdate();
-                //a linha abaixo confirma a inserção de dados
-                if(adicionado > 0){
-                    JOptionPane.showMessageDialog(null,"Dados da  alterados com sucesso!");
-                     //as linhas abaixo "limpa" os campos
-                    txtQNome.setText(null); 
-                    txtQPreco.setText(null);
-                    //a linha abaixo se refere ao combobox
-                 
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-    //metodo Responsavel pela remoção de usuario no banco
-    private void remover(){
-    //a estrutura abaixo confirma a remoção de usuario
-    int confirma = JOptionPane.showConfirmDialog(null," Tem certeza que deseja Excluir esse usuário?" ,"Atenção", JOptionPane.YES_NO_OPTION);
-    if (confirma==JOptionPane.YES_OPTION){
-        String sql="delete from tbquadras where idquad=?";
-        try {
-            pst=conexao.prepareStatement(sql);
-            pst.setString(1,txtQId.getText());
-            int apagado = pst.executeUpdate();
-            if(apagado>0){
-                JOptionPane.showMessageDialog(null,"Usuário removido com sucesso");
-                txtQNome.setText(null); 
-                txtQPreco.setText(null);
-                //a linha abaixo se refere ao combobox
-                cboQBanJog.setSelectedItem(null);
-                cboQArqb.setSelectedItem(null);
-                cboQCob.setSelectedItem(null);
-                cboQTipo.setSelectedItem(null);
-            }
-            
-            
-                
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,e);
-        }
-        }
-    
-    
-  
-     
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {                                          
         //Chamar metodo Remover
-        remover();
+        int idquad = Integer.parseInt(txtQId.getText());
+        QuadraDAO qDAO = new QuadraDAO();
+        qDAO.apagar(idquad);
+            txtQId.setText("");
+            txtQNome.setText("");
+            txtQPreco.setText("");
+            cboQTipo.setSelectedItem("");
+            cboQBanJog.setSelectedItem("");
+            cboQArqb.setSelectedItem("");
+            cboQCob.setSelectedItem("");
     }                                         
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // Chamando metodo consultar
-        consultar();
+        int idquad = Integer.parseInt(txtQId.getText());
+        QuadraDAO qDAO = new QuadraDAO();
+        quadraInterDAO q = qDAO.consultar(idquad);
+        if (q == null){
+            JOptionPane.showMessageDialog(this, "Quadra não cadastrado");
+        }else{
+            //preencher o form com os dados
+            
+            txtQNome.setText(q.getNomequadra());
+            txtQPreco.setText(q.getPreco());
+            cboQTipo.setSelectedItem(q.getTipoquad());
+            cboQBanJog.setSelectedItem(q.getBancoquad());
+            cboQArqb.setSelectedItem(q.getArquibancada());
+            cboQCob.setSelectedItem(q.getQuadcoberta());
     }                                            
-
+    }
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // Chamando metodo adicionar
-        adicionar();
-    }                                            
-
+        quadraInterDAO q = new quadraInterDAO();
+       
+        q.setNomequadra(txtQNome.getText());
+        q.setPreco(txtQPreco.getText());
+        q.setIdquad(Integer.parseInt(txtQId.getText()));
+        q.setTipoquad(cboQTipo.getSelectedItem().toString());
+        q.setArquibancada(cboQArqb.getSelectedItem().toString());
+        q.setBancoquad(cboQBanJog.getSelectedItem().toString());
+        q.setQuadcoberta(cboQCob.getSelectedItem().toString());
+        
+        QuadraDAO qDAO = new QuadraDAO();
+        qDAO.cadastrar(q);
+       
+       
+    }                                    
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // Chamando metodo Alterar
-        alterar();
-    }                                          
+        // Chamando metodo editar
+        int idquad = Integer.parseInt(txtQId.getText());
+        quadraInterDAO q = new quadraInterDAO();
+        q.setIdquad(idquad);
+        q.setNomequadra(txtQNome.getText());
+        q.setPreco(txtQPreco.getText());
+        q.setTipoquad(cboQTipo.getSelectedItem().toString());
+        q.setArquibancada(cboQArqb.getSelectedItem().toString());
+        q.setBancoquad(cboQBanJog.getSelectedItem().toString());
+        q.setQuadcoberta(cboQCob.getSelectedItem().toString());
+        
+        QuadraDAO qDAO = new QuadraDAO();
+        qDAO.alterar(q);
+       
+        
+        
+    }                             
+     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TelaQuadra().setVisible(true);
+            }
+        });
+    }
+    
+    
