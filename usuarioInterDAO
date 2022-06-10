@@ -2,9 +2,12 @@ package interDAO;
 
 /**
  *
- * @author cintia - debora - isabela
+ * @author cintia - deborah - isabela
  */
+
 public class usuarioInterDAO {
+
+    
     
     private int idUser;
     private String usuario;
@@ -19,9 +22,12 @@ public class usuarioInterDAO {
     private String bairro;
     private String rg;
     private String estado;
-    private String cadastro;
+   
     private String email;
     
+    public usuarioInterDAO() {
+    
+}
 
     public int getIdUser() {
         return idUser;
@@ -71,7 +77,7 @@ public class usuarioInterDAO {
         this.cidade = cidade;
     }
 
-    public String getCpf() {
+    public String  getCpf() {
         return cpf;
     }
 
@@ -79,19 +85,19 @@ public class usuarioInterDAO {
         this.cpf = cpf;
     }
 
-    public String getCep() {
+    public String  getCep() {
         return cep;
     }
 
-    public void setCep(String cep) {
+    public void setCep(String  cep) {
         this.cep = cep;
     }
 
-    public String getFone() {
+    public String  getFone() {
         return fone;
     }
 
-    public void setFone(String fone) {
+    public void setFone(String  fone) {
         this.fone = fone;
     }
 
@@ -111,11 +117,11 @@ public class usuarioInterDAO {
         this.bairro = bairro;
     }
 
-    public String getRg() {
+    public String  getRg() {
         return rg;
     }
 
-    public void setRg(String rg) {
+    public void setRg(String  rg) {
         this.rg = rg;
     }
 
@@ -127,14 +133,6 @@ public class usuarioInterDAO {
         this.estado = estado;
     }
 
-    public String getCadastro() {
-        return cadastro;
-    }
-
-    public void setCadastro(String cadastro) {
-        this.cadastro = cadastro;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -144,4 +142,3 @@ public class usuarioInterDAO {
     }
 }
 
-   
